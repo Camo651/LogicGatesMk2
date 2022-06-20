@@ -246,8 +246,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dragging: {fileID: 0}
   connection: {fileID: 0}
-  draggingGate: {fileID: 0}
-  hoveredGate: {fileID: 0}
+  draggingChip: {fileID: 0}
+  hoveredChip: {fileID: 0}
   mainCam: {fileID: 519420031}
   mainGatePrefabs:
   - {fileID: 4853532735988815514, guid: 0dfc571b40907af469fcf4fbbcc66879, type: 3}
@@ -256,15 +256,20 @@ MonoBehaviour:
   - {fileID: 7563143565484768777, guid: 6059eb441800db04b85bb43bb8cfa57a, type: 3}
   - {fileID: 1994396750878324756, guid: 48306b1a654d9a141b41802f043cdd6e, type: 3}
   inputModulePrefab: {fileID: 1195684358881190896, guid: 79b827a7da984164a87a89ab54d9e995, type: 3}
-  allGates: []
+  allChips: []
   lineWidth: 0.1
   onStateColour: {r: 0.9433962, g: 0.19045922, b: 0.19045922, a: 1}
   offStateColour: {r: 0.18867922, g: 0.15557136, b: 0.15557136, a: 1}
   selectionBoxDragStart: {x: 0, y: 0}
   selectionBoxDragEnd: {x: 0, y: 0}
   selectionBox: {fileID: 166195911}
-  selectedGates: []
+  selectedChips: []
   draggingSelectionBox: 0
+  itemsAreaSelected: 0
+  scrollSpeed: 100
+  scrollScaleLim: {x: 2, y: 20}
+  complexChipPrefab: {fileID: 5191483711241240584, guid: cec32f5fc0a930947bd7c77c31fe6ff1, type: 3}
+  blankNodePrefab: {fileID: 6182980741617052014, guid: fb77b7912daf5fc439266e0dbcff2cf5, type: 3}
 --- !u!20 &519420031
 Camera:
   m_ObjectHideFlags: 0
@@ -292,7 +297,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 5.95
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2

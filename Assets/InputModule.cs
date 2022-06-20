@@ -14,8 +14,14 @@ public class InputModule : MonoBehaviour
 	}
 	public void OnMouseDown()
 	{
-		if(node)
+		if (node)
+		{
 			node.ToggleNodeState();
+			if (node.nodeType == Node.NodeType.Input)
+			{
+				node.ClearConnections();
+			}
+		}
 	}
 	public void OnMouseDrag()
 	{

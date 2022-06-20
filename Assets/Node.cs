@@ -15,7 +15,7 @@ public class Node : MonoBehaviour
 	public InputModule inMod;
 	public Chip gate;
 	public bool state;
-
+	public bool preventHide;
 	public void Init()
 	{
 		state = false;
@@ -24,32 +24,44 @@ public class Node : MonoBehaviour
 		GameObject a = Instantiate(gate.player.inputModulePrefab, transform);
 		inMod = a.GetComponent<InputModule>();
 		inMod.node = this;
+		if (preventHide)
+			inMod.GetComponent<Collider>().enabled = false;
 	}
 
-	public void SetNodeState(bool s)
+	public void SetNodeState(bool s, Chip or)
 	{
+		if (or == gate)
+			return;
 		state = s;
-		sr.color = s ? gate.player.onStateColour:gate.player.offStateColour;
-		curveRenderer.SetCurveColour(s ? gate.player.onStateColour:gate.player.offStateColour);
+		SetNodeCurveColor();
 		if (nodeType == NodeType.Output)
 		{
 			if (connections.Count > 0)
 			{
 				foreach(Node c in connections)
-					c.SetNodeState(s);
+					c.SetNodeState(s, gate);
 			}
 		}
 		else if(nodeType == NodeType.Input)
 		{
+			gate.ShellInputs[0].state = s;
 			gate.UpdateChipStates();
 		}
+	}
+
+	public void SetNodeCurveColor()
+	{
+		if (!preventHide && !gate.interactable)
+			return;
+		sr.color = state ? gate.player.onStateColour : gate.player.offStateColour;
+		curveRenderer.SetCurveColour(state ? gate.player.onStateColour : gate.player.offStateColour);
 	}
 
 
 	public void ToggleNodeState()
 	{
 		if(nodeType == NodeType.Output && gate.chipType == Chip.ChipType.Input)
-			SetNodeState(!state);
+			SetNodeState(!state, null);
 	}
 
 	public void SetLineToPoint(Vector2 point)
@@ -118,5 +130,6 @@ public class Node : MonoBehaviour
 			if(n)
 				n.connections.Remove(this);
 		}
+		connections.Clear();
 	}
 }
